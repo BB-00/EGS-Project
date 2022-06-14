@@ -1,0 +1,5 @@
+uvicorn
+"passlib[bcrypt]"
+"python-jose[cryptography]"
+mariadb
+pydantic

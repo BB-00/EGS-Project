@@ -46,12 +46,12 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str | None = None
+    username: Union[str, None] = None
 
 
 class User(BaseModel):
     username: str
-    email: str | None = None
+    email: Union[str, None] = None
 
 
 class UserInDB(User):
@@ -99,7 +99,7 @@ def authenticate_user(cur_db, username: str, password: str):
 
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
+def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
