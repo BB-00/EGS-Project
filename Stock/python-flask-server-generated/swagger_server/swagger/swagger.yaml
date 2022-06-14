@@ -1,0 +1,680 @@
+openapi: 3.0.0
+info:
+  title: Stock
+  description: API designed for stock control
+  version: "1"
+servers:
+- url: https://virtserver.swaggerhub.com/MysteryShirt/Stock/1
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: Products
+  description: table of products
+- name: Providers
+  description: table of providers
+- name: Categorys
+  description: category of product
+- name: Materials
+  description: Table of Materials
+paths:
+  /article:
+    get:
+      tags:
+      - Products
+      description: gets type of product
+      operationId: article_get
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result
+          set.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: The numbers of items to return.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: type_ID
+        in: query
+        description: Return the article_ID
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: Return the name of the article
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: quantity
+        in: query
+        description: Return the quantity of the article
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successful query of types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayofArticles'
+      x-openapi-router-controller: swagger_server.controllers.products_controller
+    post:
+      tags:
+      - Products
+      description: add a new type
+      operationId: article_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/article_body'
+        required: true
+      responses:
+        "201":
+          description: Successful addition
+      x-openapi-router-controller: swagger_server.controllers.products_controller
+    delete:
+      tags:
+      - Products
+      description: removes one product
+      operationId: article_delete
+      responses:
+        "201":
+          description: Successful removal
+      x-openapi-router-controller: swagger_server.controllers.products_controller
+  /products:
+    get:
+      tags:
+      - Products
+      description: gets all available products
+      operationId: products_get
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result
+          set.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: The numbers of items to return.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: product_ID
+        in: query
+        description: Return the product_ID
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: Return the name of the product
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: reference
+        in: query
+        description: Return the reference of the product
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: quantity
+        in: query
+        description: Return the quantity of products
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: Return the size of the product
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Sucessful query of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayofProducts'
+      x-openapi-router-controller: swagger_server.controllers.products_controller
+    post:
+      tags:
+      - Products
+      description: adds a new product to the available ones
+      operationId: products_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/products_body'
+        required: true
+      responses:
+        "201":
+          description: Sucessful addition´
+      x-openapi-router-controller: swagger_server.controllers.products_controller
+    delete:
+      tags:
+      - Products
+      description: removes one product
+      operationId: products_delete
+      responses:
+        "201":
+          description: Successful removal
+      x-openapi-router-controller: swagger_server.controllers.products_controller
+  /type:
+    get:
+      tags:
+      - Categorys
+      description: gets type of product
+      operationId: type_get
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result
+          set.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: The numbers of items to return.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: type_ID
+        in: query
+        description: Return the type_ID
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: Return the name of the type
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful query of types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayofCategory'
+      x-openapi-router-controller: swagger_server.controllers.categorys_controller
+    post:
+      tags:
+      - Categorys
+      description: add a new type
+      operationId: type_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/type_body'
+        required: true
+      responses:
+        "201":
+          description: Successful addition
+      x-openapi-router-controller: swagger_server.controllers.categorys_controller
+    delete:
+      tags:
+      - Categorys
+      description: removes one product
+      operationId: type_delete
+      responses:
+        "201":
+          description: Successful removal
+      x-openapi-router-controller: swagger_server.controllers.categorys_controller
+  /providers:
+    get:
+      tags:
+      - Providers
+      description: gets all providers
+      operationId: providers_get
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result
+          set.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: The numbers of items to return.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: providers_ID
+        in: query
+        description: Return the providers_ID
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: Return the name of the provider
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: address
+        in: query
+        description: Return the address of the provider
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Return the email of the provider
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: site
+        in: query
+        description: Return the site of the provider
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: phone
+        in: query
+        description: Return the phone number of the provider
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: sucessful query of providers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayofProviders'
+      x-openapi-router-controller: swagger_server.controllers.providers_controller
+    post:
+      tags:
+      - Providers
+      description: adds a new provider
+      operationId: providers_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/providers_body'
+        required: true
+      responses:
+        "201":
+          description: Sucessful addition
+      x-openapi-router-controller: swagger_server.controllers.providers_controller
+    delete:
+      tags:
+      - Providers
+      description: removes one product
+      operationId: providers_delete
+      responses:
+        "201":
+          description: Successful removal
+      x-openapi-router-controller: swagger_server.controllers.providers_controller
+  /materials:
+    get:
+      tags:
+      - Materials
+      description: gets all materials
+      operationId: materials_get
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result
+          set.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: The numbers of items to return.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: materials_ID
+        in: query
+        description: Return the materials_ID
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: Return the name of the material
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: sucessful query of materials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayofMaterial'
+      x-openapi-router-controller: swagger_server.controllers.materials_controller
+    post:
+      tags:
+      - Materials
+      description: adds one material
+      operationId: materials_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/materials_body'
+        required: true
+      responses:
+        "201":
+          description: New object created
+      x-openapi-router-controller: swagger_server.controllers.materials_controller
+    delete:
+      tags:
+      - Materials
+      description: removes one product
+      operationId: materials_delete
+      responses:
+        "201":
+          description: Successful removal
+      x-openapi-router-controller: swagger_server.controllers.materials_controller
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        type_ID:
+          type: integer
+          description: article id
+          format: int64
+        lim:
+          type: integer
+          description: number of items to return
+          format: int64
+        ofset:
+          type: integer
+          description: nuumber of items to skip before starting
+          format: int64
+        name:
+          type: string
+          description: name of article
+        quantity:
+          type: integer
+          description: quantity of
+          format: int64
+      example:
+        lim: 6
+        quantity: 5
+        type_ID: 0
+        ofset: 1
+        name: name
+    Product:
+      type: object
+      properties:
+        product_ID:
+          type: integer
+          description: product id
+          format: int64
+        lim:
+          type: integer
+          description: number of items to return
+          format: int64
+        offset:
+          type: integer
+          description: number of items to skip before starting
+          format: int64
+        name:
+          type: string
+          description: name of the product
+        reference:
+          type: integer
+          description: reference of the product
+          format: int64
+        quantity:
+          type: integer
+          description: quantity of the product
+          format: int64
+        size:
+          type: integer
+          description: size of the product
+          format: int64
+      example:
+        reference: 5
+        lim: 6
+        quantity: 5
+        offset: 1
+        size: 2
+        product_ID: 0
+        name: name
+    Provider:
+      type: object
+      properties:
+        providers_ID:
+          type: integer
+          description: provider id
+          format: int64
+        ofset:
+          type: integer
+          description: number of items to skip before starting
+          format: int64
+        lim:
+          type: integer
+          description: number of items to return
+          format: int64
+        name:
+          type: string
+          description: name of provider
+        address:
+          type: string
+          description: address of provider
+        email:
+          type: string
+          description: email of provider
+        site:
+          type: string
+          description: site of provider
+        phone:
+          type: integer
+          description: phone number of the provider
+          format: int64
+      example:
+        lim: 1
+        site: site
+        address: address
+        phone: 5
+        ofset: 6
+        name: name
+        providers_ID: 0
+        email: email
+    Category:
+      type: object
+      properties:
+        category_ID:
+          type: integer
+          description: category id
+          format: int64
+        ofset:
+          type: integer
+          description: number of items to skip before starting
+          format: int64
+        lim:
+          type: integer
+          description: number of items to return
+          format: int64
+        name:
+          type: string
+          description: name of the category
+      example:
+        lim: 1
+        category_ID: 0
+        ofset: 6
+        name: name
+    Material:
+      type: object
+      properties:
+        materials_ID:
+          type: integer
+          description: materials id
+          format: int64
+        ofset:
+          type: integer
+          description: number of items to skip before starting
+          format: int64
+        lim:
+          type: integer
+          description: number of items to return
+          format: int64
+        name:
+          type: string
+          description: name of the category
+      example:
+        lim: 1
+        ofset: 6
+        name: name
+        materials_ID: 0
+    ArrayofProducts:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+    ArrayofArticles:
+      type: array
+      items:
+        $ref: '#/components/schemas/Article'
+    ArrayofCategory:
+      type: array
+      items:
+        $ref: '#/components/schemas/Category'
+    ArrayofMaterial:
+      type: array
+      items:
+        $ref: '#/components/schemas/Material'
+    ArrayofProviders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Provider'
+    article_body:
+      type: object
+      properties:
+        type_ID:
+          type: integer
+        name:
+          type: string
+    products_body:
+      type: object
+      properties:
+        product_ID:
+          type: integer
+        name:
+          type: string
+        size:
+          type: integer
+        material:
+          type: integer
+        provider:
+          type: integer
+        product_type:
+          type: integer
+        reference:
+          type: integer
+        quantity:
+          type: integer
+        buy_price:
+          type: number
+    type_body:
+      type: object
+      properties:
+        type_ID:
+          type: integer
+        name:
+          type: string
+    providers_body:
+      type: object
+      properties:
+        providers_ID:
+          type: integer
+        name:
+          type: string
+        country:
+          type: string
+        city:
+          type: string
+        ZIP:
+          type: integer
+        address:
+          type: string
+        email:
+          type: string
+        site:
+          type: string
+        phone:
+          type: integer
+    materials_body:
+      type: object
+      properties:
+        materials_ID:
+          type: integer
+        name:
+          type: string
+
