@@ -79,10 +79,10 @@ paths:
       operationId: article_post
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               $ref: '#/components/schemas/article_body'
-        required: true
+        required: false
       responses:
         "201":
           description: Successful addition
@@ -175,10 +175,10 @@ paths:
       operationId: products_post
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               $ref: '#/components/schemas/products_body'
-        required: true
+        required: false
       responses:
         "201":
           description: Sucessful addition´
@@ -247,10 +247,10 @@ paths:
       operationId: type_post
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               $ref: '#/components/schemas/type_body'
-        required: true
+        required: false
       responses:
         "201":
           description: Successful addition
@@ -351,10 +351,10 @@ paths:
       operationId: providers_post
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               $ref: '#/components/schemas/providers_body'
-        required: true
+        required: false
       responses:
         "201":
           description: Sucessful addition
@@ -423,10 +423,10 @@ paths:
       operationId: materials_post
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               $ref: '#/components/schemas/materials_body'
-        required: true
+        required: false
       responses:
         "201":
           description: New object created

@@ -2,11 +2,26 @@ import connexion
 import six
 import json
 import mariadb
+from unicodedata import name
+from flask import jsonify, request
 
 
 from swagger_server.models.arrayof_providers import ArrayofProviders  # noqa: E501
 from swagger_server import util
 
+config = {
+    'host' : '127.0.0.1',
+    'port' : 3306,
+    'user' : 'resende',
+    'password' : '',
+    'database' : 'egs'
+}
+
+conn = mariadb.connect(**config)
+
+cur = conn.cursor()
+
+providers_ID = 0;
 
 def providers_delete():  # noqa: E501
     """providers_delete
@@ -20,17 +35,6 @@ def providers_delete():  # noqa: E501
 
 
 def providers_get(offset=None, limit=None, providers_id=None, name=None, address=None, email=None, site=None, phone=None):  # noqa: E501
-    config = {
-        'host' : '127.0.0.1',
-        'port' : 3306,
-        'user' : 'resende',
-        'password' : '',
-        'database' : 'egs'
-    }
-
-    conn = mariadb.connect(**config)
-
-    cur = conn.cursor()
 
     cur.execute("select * from providers")
 
@@ -68,7 +72,35 @@ def providers_get(offset=None, limit=None, providers_id=None, name=None, address
     return 'do some magic!'
 
 
-def providers_post(providers_id, name, country, city, zip, address, email, site, phone):  # noqa: E501
+def providers_post():  # noqa: E501
+    providers_ID = int(request.json["providers_ID"]) 
+    name = request.json["name"]
+    address = request.json["address"]
+    email = request.json["email"]
+    site = request.json["site"]
+    phone = int(request.json["site"])
+    
+    if(cur.execute("select providers_ID from providers")== None):
+        providers_ID = providers_ID+1
+        cur.execute("insert into materials (providers_ID, name,address,email,site,phone) values (?,?,?,?,?,?)", (providers_ID, name, address,email,site,phone))
+        conn.commit()
+        conn.close()
+        return
+    
+    return "Provider already exists"
+
+    """materials_post
+
+    adds one material # noqa: E501
+
+    :param materials_id: 
+    :type materials_id: int
+    :param name: 
+    :type name: str
+
+    :rtype: None
+    """
+    return 'added to db'
     """providers_post
 
     adds a new provider # noqa: E501
