@@ -1,5 +1,6 @@
 import mariadb
 import json
+from fastapi import HTTPException
 from pydantic import BaseModel
 from typing import Union
 
