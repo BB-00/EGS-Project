@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+
+#for templates
+jinja2
+
+# for database
+sqlalchemy
+mariadb
+
+# for something
+pydantic
