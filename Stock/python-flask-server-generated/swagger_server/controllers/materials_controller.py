@@ -1,3 +1,6 @@
+
+from unicodedata import name
+from flask import jsonify, request
 import connexion
 import six
 import json
@@ -6,6 +9,19 @@ import mariadb
 from swagger_server.models.arrayof_material import ArrayofMaterial  # noqa: E501
 from swagger_server import util
 
+config = {
+    'host' : '127.0.0.1',
+    'port' : 3306,
+    'user' : 'resende',
+    'password' : '',
+    'database' : 'egs'
+}
+
+conn = mariadb.connect(**config)
+
+cur = conn.cursor()
+
+materials_ID=0
 
 def materials_delete():  # noqa: E501
     """materials_delete
@@ -19,17 +35,6 @@ def materials_delete():  # noqa: E501
 
 
 def materials_get(offset=None, limit=None, materials_id=None, name=None):  # noqa: E501
-    config = {
-        'host' : '127.0.0.1',
-        'port' : 3306,
-        'user' : 'resende',
-        'password' : '',
-        'database' : 'egs'
-    }
-
-    conn = mariadb.connect(**config)
-
-    cur = conn.cursor()
 
     cur.execute("select * from materials")
 
@@ -59,7 +64,18 @@ def materials_get(offset=None, limit=None, materials_id=None, name=None):  # noq
     return 'do some magic!'
 
 
-def materials_post(materials_id, name):  # noqa: E501
+def materials_post():  # noqa: E501
+    materials_ID = int(request.json["materials_ID"]) 
+    name = request.json["name"]
+
+    #if(cur.execute("select materials_id from materials")== None):
+    cur.execute("insert into materials (materials_ID, name) values (?,?)", (materials_ID, name))
+    conn.commit()
+    conn.close()
+    return
+    
+    return "materials id already exists"
+
     """materials_post
 
     adds one material # noqa: E501
@@ -71,4 +87,4 @@ def materials_post(materials_id, name):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    return 'added to db'

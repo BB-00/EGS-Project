@@ -2,12 +2,26 @@ import connexion
 import six
 import json
 import mariadb
-
+from unicodedata import name
+from flask import jsonify, request
 
 
 from swagger_server.models.arrayof_category import ArrayofCategory  # noqa: E501
 from swagger_server import util
 
+config = {
+    'host' : '127.0.0.1',
+    'port' : 3306,
+    'user' : 'resende',
+    'password' : '',
+    'database' : 'egs'
+}
+
+conn = mariadb.connect(**config)
+
+cur = conn.cursor()
+
+type_ID = 0
 
 def type_delete():  # noqa: E501
     """type_delete
@@ -21,18 +35,6 @@ def type_delete():  # noqa: E501
 
 
 def type_get(offset=None, limit=None, type_id=None, name=None):  # noqa: E501
-    config = {
-        'host' : '127.0.0.1',
-        'port' : 3306,
-        'user' : 'resende',
-        'password' : '',
-        'database' : 'egs'
-    }
-
-    conn = mariadb.connect(**config)
-
-    cur = conn.cursor()
-
     cur.execute("select * from type")
 
     row_headers=[x[0] for x in cur.description]
@@ -55,14 +57,27 @@ def type_get(offset=None, limit=None, type_id=None, name=None):  # noqa: E501
     :param type_id: Return the type_ID
     :type type_id: int
     :param name: Return the name of the type
-    :type name: str
+    :type name: strw
 
     :rtype: ArrayofCategory
     """
     return 'do some magic!'
 
 
-def type_post(type_id, name):  # noqa: E501
+def type_post():  # noqa: E501
+    type_ID = int(request.json["type_id"]) 
+    name = request.json["name"]
+
+    if(cur.execute("select materials_id from materials")== None):
+        type_ID = type_ID+1
+        cur.execute("insert into type (type_ID, name) values (?,?)", (type_ID, name))
+        conn.commit()
+        conn.close()
+        return
+    
+    return "materials id already exists"
+
+    
     """type_post
 
     add a new type # noqa: E501

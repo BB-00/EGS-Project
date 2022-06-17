@@ -1,0 +1,216 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Free Snow Bootstrap Website Template | Register :: w3layouts</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $(".dropdown img.flag").addClass("flagvisibility");
+
+            $(".dropdown dt a").click(function() {
+                $(".dropdown dd ul").toggle();
+            });
+                        
+            $(".dropdown dd ul li a").click(function() {
+                var text = $(this).html();
+                $(".dropdown dt a span").html(text);
+                $(".dropdown dd ul").hide();
+                $("#result").html("Selected value is: " + getSelectedValue("sample"));
+            });
+                        
+            function getSelectedValue(id) {
+                return $("#" + id).find("dt a span.value").html();
+            }
+
+            $(document).bind('click', function(e) {
+                var $clicked = $(e.target);
+                if (! $clicked.parents().hasClass("dropdown"))
+                    $(".dropdown dd ul").hide();
+            });
+
+
+            $("#flagSwitcher").click(function() {
+                $(".dropdown img.flag").toggleClass("flagvisibility");
+            });
+        });
+     </script>
+ </head>
+<body>
+	<div class="header">
+		<div class="container">
+			<div class="row">
+			  <div class="col-md-12">
+				 <div class="header-left">
+					 <div class="logo">
+						<a href="/"><img src="{{ url_for('static', filename='img/shirt_logo.png') }}" width="50px" alt=""></a>
+					 </div>
+					 <div class="menu">
+						  <a class="toggleMenu" href="#"><img src="{{ url_for('static', filename='img/nav.png') }}" alt="" /></a>
+						    <ul class="nav" id="nav">
+						    	<li><a href="shop">Shop</a></li>
+						    	<li><a href="team">Team</a></li>
+								<li><a href="contact.html">Contact</a></li>								
+								<div class="clear"></div>
+							</ul>
+							<script src="{{ url_for('static', filename='js/fresponsive-nav.js') }}"></script>
+				    </div>							
+	    		    <div class="clear"></div>
+	    	    </div>
+	            <div class="header_right">
+				    <ul class="icon1 sub-icon1 profile_img">
+					 <li><a href="#"><img src="{{ url_for('static', filename='img/cart.png') }}" alt="" width="50px"/></a>
+						<ul class="sub-icon1 list">
+							<div class="clear"></div>
+							{% if 'cart_item' in session %}
+						   {% for item in session['cart_item'] %}
+						   <li class="list_img"><img src="{{ url_for('static', filename=item['prod_img']) }}" width="50px" alt=""/></li>
+						   <li class="list_desc">
+							   <form action="#" method="post">
+								   <h4>{{item['prod_name']}}</a></h4>
+								   <span class="actual">{{item['prod_price']}}</span>
+								   <input type="hidden" name="prod_name" value="{{item['prod_name']}}"/>
+								   <input type="submit" name="rm_from_cart" class="button" value="X">
+								   </form>
+							   </li>
+							   
+							{% endfor %}
+							{% if not session['cart_item'] %}
+								<div class="no-records">Your Cart is Empty</div>
+							{% endif %}
+						 {% else %}
+							 <div class="no-records">Your Cart is Empty</div>
+						 {% endif %}
+						  <div class="login_buttons">
+							 <div class="check_button"><a href="checkout">Check out</a></div>
+							 {% if 'user' not in session %}
+							 	<div class="login_button"><a href="login_page">Login</a></div>
+							 {% else %}
+							 	<div class="login_button"><a href="logout">Logout</a></div>
+							 {% endif %}
+							 <div class="clear"></div>
+						  </div>
+						  <div class="clear"></div>
+						</ul>
+					 </li>
+				   </ul>
+		           <div class="clear"></div>
+	       </div>
+	      </div>
+		 </div>
+	    </div>
+	  </div>
+     <div class="main">
+      <div class="shop_top">
+		{% with messages = get_flashed_messages() %}
+			  {% if messages %}
+				  {% for msg in messages %}
+					  <div class="alert alert-warning" style="padding-left: 800px;">
+						  <strong>{{msg}}</strong>
+					  </div>
+				  {% endfor %}
+			  {% endif %}
+		  {% endwith %}
+	     <div class="container">
+					<form action="" method="post" name="register" id="register-form">
+						<div class="register-top-grid">
+							<h3>PERSONAL INFORMATION</h3>
+							<div>
+								<span>Username<label>*</label></span>
+								<input type="text" name="username" size="18" autocomplete="off">
+							</div>
+							<div>
+								<span>Email Address<label>*</label></span>
+								<input type="text" name="email" size="18" autocomplete="off">
+							</div>
+						</div>
+						<div class="clear"> </div>
+						<div class="register-bottom-grid">
+							<h3>LOGIN INFORMATION</h3>
+							<div>
+								<span>Password<label>*</label></span>
+								<input type="password" name="password" size="18" autocomplete="off">
+							</div>
+							<div>
+								<span>Confirm Password<label>*</label></span>
+								<input type="password" name="password_confirm" size="18" autocomplete="off">
+							</div>
+							<div class="clear"> </div>
+						</div>
+						<div class="clear"> </div>
+						<input type="submit" name="Submit" class="button" value="Create Account"><div class="clear"></div>
+					</form>
+				</div>
+		   </div>
+	  </div>
+	  <div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<ul class="footer_box">
+						<h4>Products</h4>
+						<li><a href="#">Mens</a></li>
+						<li><a href="#">Womens</a></li>
+						<li><a href="#">Youth</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3">
+					<ul class="footer_box">
+						<h4>About</h4>
+						<li><a href="#">Careers and internships</a></li>
+						<li><a href="#">Sponserships</a></li>
+						<li><a href="#">team</a></li>
+						<li><a href="#">Catalog Request/Download</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3">
+					<ul class="footer_box">
+						<h4>Customer Support</h4>
+						<li><a href="#">Contact Us</a></li>
+						<li><a href="#">Shipping and Order Tracking</a></li>
+						<li><a href="#">Easy Returns</a></li>
+						<li><a href="#">Warranty</a></li>
+						<li><a href="#">Replacement Binding Parts</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3">
+					<ul class="footer_box">
+						<h4>Newsletter</h4>
+						<div class="footer_search">
+						   <form>
+							<input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
+							<input type="submit" value="Go">
+						   </form>
+						</div>
+						<ul class="social">	
+						  <li class="facebook"><a href="#"><span> </span></a></li>
+						  <li class="twitter"><a href="#"><span> </span></a></li>
+						  <li class="instagram"><a href="#"><span> </span></a></li>	
+						  <li class="pinterest"><a href="#"><span> </span></a></li>	
+						  <li class="youtube"><a href="#"><span> </span></a></li>										  				
+						</ul>
+						   
+					</ul>
+				</div>
+			</div>
+			<div class="row footer_bottom">
+				<div class="copy">
+				   <p>© 2014 Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a></p>
+				</div>
+				  
+			   </div>
+		</div>
+	</div>
+</body>	
+</html>
