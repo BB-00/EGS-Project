@@ -1,0 +1,8 @@
+{
+    "user": "egs",
+    "password": "egs",
+    "host": "localhost",
+    "port": 3306,
+    "database": "payments_db",
+    "url": "mariadb+mariadbconnector://egs:egs@127.0.0.1:3306/payments_db"
+}
