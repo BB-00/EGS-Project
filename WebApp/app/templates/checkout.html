@@ -54,7 +54,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  <div class="col-md-12">
 				 <div class="header-left">
 					 <div class="logo">
-						<a href=""><img src="{{ url_for('static', filename='img/shirt_logo.png') }}" width="50px" alt=""></a>
+						<a href="/"><img src="{{ url_for('static', filename='img/shirt_logo.png') }}" width="50px" alt=""></a>
 					 </div>
 					 <div class="menu">
 						  <a class="toggleMenu" href="#"><img src="{{ url_for('static', filename='img/nav.png') }}" alt="" /></a>
@@ -132,8 +132,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</div>
 					{% endfor %}
 				</div>
-				<p>YOUR BILL IS {{session["checkout_cost"]}}</p>
-			{% endif %}
+				<p>YOUR TOTAL IS {{session["checkout_cost"]}}</p>
+				<form action="" method="post" name="checkout" id="checkout-form">
+					<input type="submit" name="Submit" class="button" value="Checkout"><div class="clear"></div>
+					<input type="hidden" name="test" value="mamas"/>
+				</form>
+				{% endif %}
 			</div>
 	   </div>
 	  </div>

@@ -28,6 +28,7 @@ def shop():
         for item in session['cart_item']:
             if item['prod_name'] == prod_name:
                 session['cart_item'].pop(i)
+                session['checkout_cost'] = session['checkout_cost']-float(item['prod_price']) 
                 session.modified = True
                 return redirect(url_for("shop"))
             i=i+1
@@ -35,12 +36,23 @@ def shop():
     else:
         return render_template("shop.html")
 
-@app.route("/checkout")
+@app.route("/checkout", methods=["POST","GET"])
 def checkout():
 
+    if request.method == "POST":
 
+        try:
 
-    return render_template("checkout.html")
+            r = requests.post('http://127.0.0.1:9021/payments', json={"username":"lalala","amount":145})
+            r.raise_for_status()
+    
+            return redirect('http://127.0.0.1:9021/payments', code=307)
+        except:
+            # flash("")
+            return redirect(url_for("checkout"))        
+
+    else:
+        return render_template("checkout.html")
 
 @app.route("/team")
 def team():
@@ -61,6 +73,8 @@ def register_page():
             session["user"] = user
             session["cart_item"] = []
             session["checkout_cost"] = 0
+
+            
 
             return redirect(url_for("index"))
         except:
