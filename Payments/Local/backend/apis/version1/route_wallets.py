@@ -6,9 +6,9 @@ from typing import List
 from fastapi.templating import Jinja2Templates
 
 from schemas.wallets import WalletCreate
-from schemas.transactions import TransactionShow
+# from schemas.transactions import TransactionShow
 from database.session import get_db
-from database.repository.wallets import create_new_wallet, get_wallet#, get_walletID
+from database.repository.wallets import create_new_wallet, get_wallet
 from database.repository.transactions import get_transactions
 
 templates = Jinja2Templates(directory="templates")
