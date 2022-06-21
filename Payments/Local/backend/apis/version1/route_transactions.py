@@ -18,7 +18,7 @@ def transaction_get(_walletID:int, db:Session=Depends(get_db), _offset: Union[in
     list_transactions = get_transactions(db=db, walletID=_walletID, offset=_offset, limit=_limit, amount=_amount, date_begin=_date_begin, date_end=_date_end)
     return list_transactions
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post("/")
 def transaction_post(_amount: str=Form(), _methodID: str=Form(), _username: str=Form(), db:Session=Depends(get_db)):
     _walletID = db.query(wallets.Wallets.walletID).filter(wallets.Wallets.username == _username).one()
     _walletID = _walletID[0]
