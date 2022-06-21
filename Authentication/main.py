@@ -1,18 +1,8 @@
-from datetime import datetime, timedelta
-from typing import Union
-
-from fastapi import Depends, FastAPI, HTTPException, status, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.security import OAuth2PasswordRequestForm
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from pydantic import BaseModel
 
 from auth import AuthHandler
 from db import DbHandler
-import json
-import mariadb
-import sys
-
 
 app = FastAPI()
 
@@ -50,5 +40,5 @@ async def register_user(request: Request):
 
 
 @app.get("/validate")
-async def validate_token(token: str, ):
+async def validate_token(token: str):
     return auth.decode_token(token)
