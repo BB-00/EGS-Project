@@ -6,18 +6,20 @@
 {% endblock %} 
 
 {% block content %} 
-  <div class="container">
-    <p></p>
-    <h3>User: <b>{{_username}}</b></h3>
-    <p></p>
-    <h3>Amount: <b>{{_amount}}</b></h3>
-    <p></p>
-    <form action="/transactions" method="post">
-      <input type="hidden" name="_amount" value="{{_amount}}"/>
-      <input type="hidden" name="_methodID" value="{{_methodID}}"/>
-      <input type="hidden" name="_username" value="{{_username}}"/>
-      <input type="submit" name="button_pay" class="button" value="Pay"/>
-    </form>
+<div class="row shop_box-top">
+    {% for item in transactions %}
+        <div class=" col-md-3 shop_box">
+            
+            <div class="shop_desc">
+                <form>
+                    <h3>{{item.transactionID}}</h3>
+                    <span class="actual">{{item.amount}}</span><br>
+                    <span class="actual">{{item.methodID}}</span><br>
+                    <span class="actual">{{item.date}}</span><br>
+                </form>
+            </div>
 
-  </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %} 

@@ -33,4 +33,4 @@ async def payment(request: Request):
             detail="payments: login no longer valid!"
         )
 
-	return templates.TemplateResponse("general_pages/homepage.html",{"request":request, "_amount":amount, "_methodID":0, "_username":username})
+	return templates.TemplateResponse("general_pages/payments.html",{"request":request, "_amount":amount, "_methodID":0, "_username":username})

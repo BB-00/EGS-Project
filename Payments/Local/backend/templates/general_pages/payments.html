@@ -1,0 +1,23 @@
+{% extends "shared/base.html" %}
+
+
+{% block title %} 
+  <title>PayPalio</title>
+{% endblock %} 
+
+{% block content %} 
+  <div class="container">
+    <p></p>
+    <h3>User: <b>{{_username}}</b></h3>
+    <p></p>
+    <h3>Amount: <b>{{_amount}}</b></h3>
+    <p></p>
+    <form action="/transactions" method="post">
+      <input type="hidden" name="_amount" value="{{_amount}}"/>
+      <input type="hidden" name="_methodID" value="{{_methodID}}"/>
+      <input type="hidden" name="_username" value="{{_username}}"/>
+      <input type="submit" name="button_pay" class="button" value="Pay"/>
+    </form>
+
+  </div>
+{% endblock %} 

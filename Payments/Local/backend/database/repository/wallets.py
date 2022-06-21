@@ -12,5 +12,5 @@ def create_new_wallet(wallet:WalletCreate, db:Session):
     return wallet
 
 def get_wallet(db:Session, username:str):
-    wallet = db.query(Wallets).filter(Wallets.username == username).all()
+    wallet = db.query(Wallets).filter(Wallets.username == username).one()
     return wallet
