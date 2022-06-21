@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 import requests
@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.post("/")
-async def home(request: Request):
+async def payment(request: Request):
 	body = await request.body()
 	body = body.decode("utf-8")
 
@@ -27,7 +27,10 @@ async def home(request: Request):
 
 	response = requests.get("http://127.0.0.1:9020/validate", params=params)
 
-	if response is not username:
-		return "merda"
+	if response.json() != username:
+		raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="payments: login no longer valid!"
+        )
 
-	return templates.TemplateResponse("general_pages/homepage.html",{"username":username})
+	return templates.TemplateResponse("general_pages/homepage.html",{"request":request, "_amount":amount, "_methodID":0, "_username":username})

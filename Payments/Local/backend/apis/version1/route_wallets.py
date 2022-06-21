@@ -6,7 +6,7 @@ from typing import List
 from schemas.wallets import WalletCreate
 from schemas.transactions import TransactionShow
 from database.session import get_db
-from database.repository.wallets import create_new_wallet, get_wallet
+from database.repository.wallets import create_new_wallet, get_wallet#, get_walletID
 
 
 router = APIRouter()
@@ -24,3 +24,8 @@ def wallet_post(_username:str, db:Session=Depends(get_db)):
 def wallet_get(_username:str, db:Session=Depends(get_db)):
     transactions = get_wallet(db=db, username=_username)
     return transactions
+
+# @router.get("/walletID")
+# def walletID_get(_username:str, db:Session=Depends(get_db)):
+#     walletID = get_walletID(db=db, username=_username)
+#     return walletID

@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException, status, Form
 from fastapi import Depends
+from fastapi.responses import RedirectResponse
+from sqlalchemy.orm import Session
 from typing import Union
 from datetime import datetime
 from typing import List
@@ -18,24 +19,27 @@ def transaction_get(_walletID:int, db:Session=Depends(get_db), _offset: Union[in
     return list_transactions
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-def transaction_post(transaction: TransactionCreate, db:Session=Depends(get_db)):
-    if transaction.amount > 0:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="transactions: amount needs to be lower than 0!"
-        )
-    if transaction.methodID not in [0, 1, 2]:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="transactions: method of payment is wrong!"
-        )
-    if db.query(wallets.Wallets).filter(wallets.Wallets.walletID == transaction.walletID).first() == None:
+def transaction_post(_amount: str=Form(), _methodID: str=Form(), _username: str=Form(), db:Session=Depends(get_db)):
+    _walletID = db.query(wallets.Wallets.walletID).filter(wallets.Wallets.username == _username).one()
+    _walletID = _walletID[0]
+    if _walletID is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="transactions: wallet is not valid!"
         )
+    if - float(_amount) > 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="transactions: amount needs to be lower than 0!"
+        )
+    if int(_methodID) not in [0, 1, 2]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="transactions: method of payment is wrong!"
+        )
+    transaction = TransactionCreate(amount= - float(_amount), methodID=int(_methodID), walletID=int(_walletID))
     transaction = create_new_transaction(db=db, transaction=transaction)
-    return transaction
+    return RedirectResponse("http://127.0.0.1:5000/payment_successfull")
 
 @router.get("/{transaction_id}", response_model=TransactionShow, status_code=status.HTTP_200_OK)
 def transaction_transaction_id_get(transaction_id:int, db:Session=Depends(get_db)):
