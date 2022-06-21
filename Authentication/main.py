@@ -10,6 +10,11 @@ auth = AuthHandler()
 
 db = DbHandler()
 
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+
 
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -21,18 +26,12 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 @app.post("/register")
-async def register_user(request: Request):
+async def register_user(user: UserCreate):
 
-    body = await request.body()
-    body = body.decode("utf-8")
+    username = user.username
+    email = user.email
 
-    body_list=body.split('&')
-    username = body_list[0].split('=')[1]
-    email = body_list[1].split('=')[1]
-    password = body_list[2].split('=')[1]
-
-    password = auth.get_password_hash(password)
-
+    password = auth.get_password_hash(user.password)
 
     db.register_user_db(username, email, password)
 
