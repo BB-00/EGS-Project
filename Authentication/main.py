@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from auth import AuthHandler
 from db import DbHandler
+from pydantic import BaseModel
 
 app = FastAPI()
 
