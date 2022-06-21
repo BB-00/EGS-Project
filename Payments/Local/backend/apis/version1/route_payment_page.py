@@ -22,4 +22,10 @@ async def home(request: Request):
 	# print(token)
 	# print(amount)
 	# print(username)
+
+	response = requests.get("http://127.0.0.1:9020/validate", params=token)
+
+	if response is not username:
+		return "merda"
+
 	return templates.TemplateResponse("general_pages/homepage.html",{"request":request})

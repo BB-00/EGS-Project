@@ -1,8 +1,11 @@
 fastapi
 uvicorn
 
-#for templates
+# for templates
 jinja2
+
+# for static files
+aiofiles
 
 # for database
 sqlalchemy
@@ -10,3 +13,5 @@ mariadb
 
 # for something
 pydantic
+
+requests
