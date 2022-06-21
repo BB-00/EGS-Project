@@ -60,8 +60,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						  <a class="toggleMenu" href="#"><img src="{{ url_for('static', filename='img/nav.png') }}" alt="" /></a>
 						    <ul class="nav" id="nav">
 						    	<li><a href="shop">Shop</a></li>
+								<li><a href="orders">Orders</a></li>								
 						    	<li><a href="team">Team</a></li>
-								<li><a href="contact.html">Contact</a></li>								
 								<div class="clear"></div>
 							</ul>
 							<script src="{{ url_for('static', filename='js/fresponsive-nav.js') }}"></script>
@@ -125,6 +125,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<span class="actual">$40.00</span><br>
 							<input type="hidden" name="prod_img" value="img/1bundle.png"/>
 							<input type="hidden" name="prod_price" value="40.00"/>
+							<input type="hidden" name="prod_amount" value="1"/>
 							<ul class="buttons">
 							{% if 'user' in session %}
 								<li class="cart"><input type="submit" name="add_to_cart" class="button" value="Add To Cart"><div class="clear"></div></li>
@@ -147,6 +148,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<span class="actual">$72.00</span><br>
 							<input type="hidden" name="prod_img" value="img/2bundle.png"/>
 							<input type="hidden" name="prod_price" value="72.00"/>
+							<input type="hidden" name="prod_amount" value="2"/>
 							<ul class="buttons">
 							{% if 'user' in session %}
 								<li class="cart"><input type="submit" name="add_to_cart" class="button" value="Add To Cart"><div class="clear"></div></li>
@@ -169,6 +171,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<span class="actual">$95.00</span><br>
 							<input type="hidden" name="prod_img" value="img/3bundle.png"/>
 							<input type="hidden" name="prod_price" value="95.00"/>
+							<input type="hidden" name="prod_amount" value="3"/>
 							<ul class="buttons">
 							{% if 'user' in session %}
 								<li class="cart"><input type="submit" name="add_to_cart" class="button" value="Add To Cart"><div class="clear"></div></li>
@@ -191,6 +194,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<span class="actual">$110.00</span><br>
 							<input type="hidden" name="prod_img" value="img/4bundle.png"/>
 							<input type="hidden" name="prod_price" value="110.00"/>
+							<input type="hidden" name="prod_amount" value="4"/>
 							<ul class="buttons">
 							{% if 'user' in session %}
 								<li class="cart"><input type="submit" name="add_to_cart" class="button" value="Add To Cart"><div class="clear"></div></li>

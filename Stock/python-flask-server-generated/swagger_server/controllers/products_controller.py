@@ -12,9 +12,9 @@ from swagger_server import util
 config = {
     'host' : '127.0.0.1',
     'port' : 3306,
-    'user' : 'resende',
-    'password' : '',
-    'database' : 'egs'
+    'user' : 'egs',
+    'password' : 'egs',
+    'database' : 'stock_db'
 }
 
 conn = mariadb.connect(**config)
@@ -23,6 +23,7 @@ cur = conn.cursor()
 
 product_ID = 0
 article_ID = 0
+
 
 def article_delete():  # noqa: E501
     """article_delete
@@ -74,7 +75,7 @@ def article_post():  # noqa: E501
     name = request.json["name"]
     cur.execute("insert into article (article_ID, name) values (?,?)", (article_ID, name))
     conn.commit()
-    conn.close()
+
 
     """materials_post
 
@@ -160,7 +161,7 @@ def products_post():  # noqa: E501
     quantity = request.json["quantity"]
     buy_price = request.json["buy_price"]
 
-
+    
     cur.execute("select product_ID from products")
     row_headers=[x[0] for x in cur.description]
     rv = cur.fetchall()
@@ -168,17 +169,16 @@ def products_post():  # noqa: E501
     for result in rv:
         json_data.append(dict(zip(row_headers,result)))
 
-    print(json_data[0])
 
     for x in json_data:
         found = True
         if(x["product_ID"] == product_ID):
             found = False
-            break;
+            break
         
 
-    if (found & int(quantity)>0):
-        cur.execute("insert into products (product_ID, name, size, material, provider, product_type, reference, quantity, buy_price) values (?,?,?,?,?,?,?,?,?)", (product_ID, name, size, material, provider, product_type, reference, quantity, buy_price))
+    if found:
+        cur.execute("insert into products (product_ID, name, size, materials_ID, provider, product_type, reference, quantity, buy_price) values (?,?,?,?,?,?,?,?,?)", (product_ID, name, size, material, provider, product_type, reference, quantity, buy_price))
         conn.commit()
 
     else:
@@ -189,6 +189,8 @@ def products_post():  # noqa: E501
         for result in rv:
             json_data.append(dict(zip(row_headers,result)))
         
+        print(json_data)
+
         newquantity= int(json_data[0]["quantity"]) + quantity
 
         print(newquantity , " jasdjasjd", product_ID)
