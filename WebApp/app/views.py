@@ -1,5 +1,6 @@
 from app import app
 import requests
+import json
 
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 
@@ -43,9 +44,23 @@ def checkout():
 
         try:
 
-            r = requests.post('http://127.0.0.1:9021/payments', json={"username":"lalala","amount":145})
-            r.raise_for_status()
     
+            # url = "http://127.0.0.1:9021/payments"
+
+            # payload = json.dumps({
+            # "username": "test1",
+            # "amount": 145
+            # })
+            # headers = {
+            # 'Content-Type': 'application/json'
+            # }
+
+            # r = requests.post('http://127.0.0.1:9021/payments', headers=headers, data=payload)
+            # # response = requests.request("POST", url, headers=headers, data=payload)
+            # # r.raise_for_status()
+
+            # return 'ola'
+
             return redirect('http://127.0.0.1:9021/payments', code=307)
         except:
             # flash("")
@@ -115,3 +130,8 @@ def logout():
     session.pop("cart_item", None)
     flash("Logging out!")
     return redirect(url_for("login_page"))
+
+@app.route("/checkout_info")
+def checkout_info():
+    
+    return session

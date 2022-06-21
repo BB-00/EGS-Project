@@ -135,7 +135,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<p>YOUR TOTAL IS {{session["checkout_cost"]}}</p>
 				<form action="" method="post" name="checkout" id="checkout-form">
 					<input type="submit" name="Submit" class="button" value="Checkout"><div class="clear"></div>
-					<input type="hidden" name="test" value="mamas"/>
+					<input type="hidden" name="token" value="{{session['token']}}"/>
+					<input type="hidden" name="amount" value="{{session['checkout_cost']}}"/>
+					<input type="hidden" name="username" value="{{session['user']}}"/>
 				</form>
 				{% endif %}
 			</div>

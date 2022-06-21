@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Union
 
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -31,9 +31,18 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 @app.post("/register")
-async def register_user(username: str, email: str, password: str):
+async def register_user(request: Request):
 
-    password = auth.get_password_hash(password);
+    body = await request.body()
+    body = body.decode("utf-8")
+
+    body_list=body.split('&')
+    username = body_list[0].split('=')[1]
+    email = body_list[1].split('=')[1]
+    password = body_list[2].split('=')[1]
+
+    password = auth.get_password_hash(password)
+
 
     db.register_user_db(username, email, password)
 
