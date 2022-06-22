@@ -1,0 +1,8 @@
+#docker run --name some-mariadb --env MARIADB_USER=egs 
+#--env MARIADB_PASSWORD=egs --env MARIADB_ROOT_PASSWORD=root db:test
+
+FROM mariadb:latest
+
+COPY backend/init.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 3306

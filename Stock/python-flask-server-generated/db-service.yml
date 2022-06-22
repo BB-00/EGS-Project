@@ -1,0 +1,12 @@
+---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: stock-db
+      namespace: egs6
+    spec:
+      selector:
+        app: stock-db
+      ports:
+      - port: 3306
+        targetPort: 3306

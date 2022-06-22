@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-api
+  namespace: egs6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments-api
+  template:
+    metadata:
+      labels:
+        app: payments-api
+    spec:
+      containers:
+      - name: payments-api
+        image: registry.deti:5000/mysteryshirt/payments-api:1012
+        ports:
+        - containerPort: 9021
+        # env:
+          ##### .secret
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      restartPolicy: Always
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-api
+  namespace: egs6
+spec:
+  selector:
+    app: payments-api
+  ports:
+  - port: 9021
+    targetPort: 9000

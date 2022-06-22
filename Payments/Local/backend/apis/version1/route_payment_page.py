@@ -25,7 +25,7 @@ async def payment(request: Request):
 
 	params = {"token":token}
 
-	response = requests.get("http://127.0.0.1:9020/validate", params=params)
+	response = requests.get("http://auth-api:7000/validate", params=params)
 
 	if response.json() != username:
 		raise HTTPException(

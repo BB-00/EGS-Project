@@ -9,7 +9,7 @@ from flask import jsonify, request
 from swagger_server.models.arrayof_providers import ArrayofProviders  # noqa: E501
 from swagger_server import util
 config = {
-    'host' : 'stocks_db',
+    'host' : 'stock-db',
     'port' : 3306,
     'user' : 'egs',
     'password' : 'egs',
