@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from auth import AuthHandler
 from db import DbHandler
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -31,7 +32,11 @@ async def register_user(user: UserCreate):
     username = user.username
     email = user.email
 
+    print(username)
+    print(email)
+
     password = auth.get_password_hash(user.password)
+    print(password)
 
     db.register_user_db(username, email, password)
 

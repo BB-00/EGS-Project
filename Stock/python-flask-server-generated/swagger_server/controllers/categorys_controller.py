@@ -64,7 +64,7 @@ def type_get(offset=None, limit=None, type_id=None, name=None):  # noqa: E501
 
 
 def type_post():  # noqa: E501
-    type_ID = int(request.json["type_id"]) 
+    type_ID = int(request.json["type_ID"]) 
     name = request.json["name"]
 
     if(cur.execute("select materials_id from materials")== None):

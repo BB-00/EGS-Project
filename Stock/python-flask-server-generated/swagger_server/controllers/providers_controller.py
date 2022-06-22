@@ -8,7 +8,6 @@ from flask import jsonify, request
 
 from swagger_server.models.arrayof_providers import ArrayofProviders  # noqa: E501
 from swagger_server import util
-
 config = {
     'host' : 'stocks_db',
     'port' : 3306,
@@ -78,11 +77,11 @@ def providers_post():  # noqa: E501
     address = request.json["address"]
     email = request.json["email"]
     site = request.json["site"]
-    phone = int(request.json["site"])
+    phone = int(request.json["phone"])
     
     if(cur.execute("select providers_ID from providers")== None):
         providers_ID = providers_ID+1
-        cur.execute("insert into materials (providers_ID, name,address,email,site,phone) values (?,?,?,?,?,?)", (providers_ID, name, address,email,site,phone))
+        cur.execute("insert into providers (providers_ID, name,address,email,site,phone) values (?,?,?,?,?,?)", (providers_ID, name, address,email,site,phone))
         conn.commit()
 
         return

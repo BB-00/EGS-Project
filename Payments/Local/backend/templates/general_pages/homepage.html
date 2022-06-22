@@ -2,11 +2,24 @@
 
 
 {% block title %} 
-  <title>Job Board</title>
+  <title>PayPalio</title>
 {% endblock %} 
 
 {% block content %} 
-  <div class="container">
-    <h1 class="display-4">Find Jobs...</h1>
-  </div>
+<div class="row shop_box-top">
+    {% for item in transactions %}
+        <div class=" col-md-3 shop_box">
+            
+            <div class="shop_desc">
+                <form>
+                    <h3>{{item.transactionID}}</h3>
+                    <span class="actual">{{item.amount}}</span><br>
+                    <span class="actual">{{item.methodID}}</span><br>
+                    <span class="actual">{{item.date}}</span><br>
+                </form>
+            </div>
+
+        </div>
+    {% endfor %}
+</div>
 {% endblock %} 

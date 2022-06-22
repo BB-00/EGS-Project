@@ -25,6 +25,7 @@ cur = conn.cursor()
 product_ID = 0
 article_ID = 0
 
+
 def article_delete():  # noqa: E501
     """article_delete
 
@@ -75,6 +76,7 @@ def article_post():  # noqa: E501
     name = request.json["name"]
     cur.execute("insert into article (article_ID, name) values (?,?)", (article_ID, name))
     conn.commit()
+
 
     """materials_post
 
@@ -160,7 +162,7 @@ def products_post():  # noqa: E501
     quantity = request.json["quantity"]
     buy_price = request.json["buy_price"]
 
-
+    
     cur.execute("select product_ID from products")
     row_headers=[x[0] for x in cur.description]
     rv = cur.fetchall()
