@@ -10,11 +10,11 @@ from swagger_server.models.arrayof_providers import ArrayofProviders  # noqa: E5
 from swagger_server import util
 
 config = {
-    'host' : '127.0.0.1',
+    'host' : 'stocks_db',
     'port' : 3306,
-    'user' : 'resende',
-    'password' : '',
-    'database' : 'egs'
+    'user' : 'egs',
+    'password' : 'egs',
+    'database' : 'stock_db'
 }
 
 conn = mariadb.connect(**config)
@@ -84,7 +84,7 @@ def providers_post():  # noqa: E501
         providers_ID = providers_ID+1
         cur.execute("insert into materials (providers_ID, name,address,email,site,phone) values (?,?,?,?,?,?)", (providers_ID, name, address,email,site,phone))
         conn.commit()
-        conn.close()
+
         return
     
     return "Provider already exists"
