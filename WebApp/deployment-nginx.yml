@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-shirts
+  namespace: egs6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-shirts
+  template:
+    metadata:
+      labels:
+        app: nginx-shirts
+    spec:
+      containers:
+      - name: nginx-shirts
+        image: registry.deti:5000/mysteryshirts/nginx-shirts:1010
+        ports:
+          - containerPort: 9090
+        resources: {}
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-shirts
+  namespace: egs6
+spec:
+  ports:
+  - port: 9090
+    targetPort: 9090
+  selector:
+    app: nginx-shirts
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-app
+  namespace: egs6
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/frontend-entry-points: http,https
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+spec:
+  rules:
+  - host: app-shirts.egs
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-shirts
+            port: 
+              number: 9090
