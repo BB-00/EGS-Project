@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: auth-api
-        image: registry.deti:5000/mysteryshirt/auth-api:1012
+        image: registry.deti:5000/mysteryshirt/auth-api:1013
         ports:
         - containerPort: 9090
         # env:
