@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: stocks_db
+  namespace: egs6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stocks_db
+  template:
+    metadata:
+      labels:
+        app: stocks_db
+    spec:
+      containers:
+      - name: stocks_db
+        image: mariadb
+        imagePullPolicy: "IfNotPresent"
+        ports:
+        - containerPort: 3306
+        env:
+        -name: mariadb_root_password
+        valueFrom:
+         secretKeyRef:
+          name: stock_secrets
+          key: db_root_password
+        volumeMounts:
+        - name: stocks_db-pvc
+          mountPath: /var/www/static
+      restartPolicy: Always
+      volumes:
+      - name: stocks_db-pvc
+        persistentVolumeClaim:
+            claimName: stocks_db-pvc
+
+#Create Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stocks_db
+  namespace: egs6
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    app: stocks_db
+
+#Create PVC
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stocks_db-pvc
+  namespace: egs6
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 500Mi

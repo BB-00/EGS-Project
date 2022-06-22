@@ -60,8 +60,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						  <a class="toggleMenu" href="#"><img src="{{ url_for('static', filename='img/nav.png') }}" alt="" /></a>
 						    <ul class="nav" id="nav">
 						    	<li><a href="shop">Shop</a></li>
+								<li><a href="orders">Orders</a></li>								
 						    	<li><a href="team">Team</a></li>
-								<li><a href="contact.html">Contact</a></li>								
 								<div class="clear"></div>
 							</ul>
 							<script src="{{ url_for('static', filename='js/fresponsive-nav.js') }}"></script>
@@ -72,8 +72,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				    <ul class="icon1 sub-icon1 profile_img">
 					 <li><a href="#"><img src="{{ url_for('static', filename='img/cart.png') }}" alt="" width="50px"/></a>
 						<ul class="sub-icon1 list">
-							<div class="clear"></div>
-							{% if 'cart_item' in session %}
+						   <div class="clear"></div>
+						   {% if 'cart_item' in session %}
 						   {% for item in session['cart_item'] %}
 						   <li class="list_img"><img src="{{ url_for('static', filename=item['prod_img']) }}" width="50px" alt=""/></li>
 						   <li class="list_desc">
@@ -91,7 +91,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							{% endif %}
 						 {% else %}
 							 <div class="no-records">Your Cart is Empty</div>
-						 {% endif %}
+						 {% endif %} 
 						  <div class="login_buttons">
 							 <div class="check_button"><a href="checkout">Check out</a></div>
 							 {% if 'user' not in session %}
@@ -110,7 +110,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	      </div>
 		 </div>
 	    </div>
-	  </div>
+	</div>
      <div class="main">
       <div class="shop_top">
 		{% with messages = get_flashed_messages() %}
