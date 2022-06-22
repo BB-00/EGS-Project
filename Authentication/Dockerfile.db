@@ -3,6 +3,8 @@
 
 FROM mariadb:latest
 
-COPY backend/init.sql /docker-entrypoint-initdb.d/
+COPY init.sql /docker-entrypoint-initdb.d/
+
+# RUN sudo service mariadb start
 
 EXPOSE 3306

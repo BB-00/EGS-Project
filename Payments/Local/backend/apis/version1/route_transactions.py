@@ -39,7 +39,7 @@ def transaction_post(_amount: str=Form(), _methodID: str=Form(), _username: str=
         )
     transaction = TransactionCreate(amount= - float(_amount), methodID=int(_methodID), walletID=int(_walletID))
     transaction = create_new_transaction(db=db, transaction=transaction)
-    return RedirectResponse("http://127.0.0.1:5000/payment_successfull")
+    return RedirectResponse("http://agregator_api:6000/payment_successfull")
 
 @router.get("/{transaction_id}", response_model=TransactionShow, status_code=status.HTTP_200_OK)
 def transaction_transaction_id_get(transaction_id:int, db:Session=Depends(get_db)):

@@ -6,7 +6,7 @@ from typing import Generator
 
 with open('.secret/key_db.json') as f:
     x = json.load(f)
-    engine = create_engine(x['url'])
+    engine = create_engine(x['url'], echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

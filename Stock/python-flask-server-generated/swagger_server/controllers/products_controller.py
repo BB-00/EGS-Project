@@ -10,8 +10,9 @@ from flask import jsonify, request
 from swagger_server.models.arrayof_articles import ArrayofArticles  # noqa: E501
 from swagger_server.models.arrayof_products import ArrayofProducts  # noqa: E501
 from swagger_server import util
+
 config = {
-    'host' : 'stocks_db',
+    'host' : 'stock-db',
     'port' : 3306,
     'user' : 'egs',
     'password' : 'egs',

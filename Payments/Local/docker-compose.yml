@@ -1,11 +1,11 @@
 version: '3.8'
 services:
   db:
-    image: mariadb:latest
+    image: payments_db:test
     hostname: payments_db
-    # build:
-    #   context: .
-    #   dockerfile: 
+    build:
+      context: .
+      dockerfile: dockerfile.db
     restart: always
     volumes:
       - db_files:/var/lib/mysql

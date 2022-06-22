@@ -1,51 +1,9 @@
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: db-deploy-stock
-  namespace: egs6
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: stock-db
-  template:
-    metadata:
-      labels:
-        app: stock-db
-    spec:
-      containers:
-        - name: stock-db
-          image: registry.deti:5000/mysteryshirt/stock-db:1012
-          ports:
-            - containerPort: 3306
-          resources: {}
-          env:
-            - name: MARIADB_DATABASE
-              value: stock_db
-            - name: MARIADB_USER
-              value: egs
-            - name: MARIADB_PASSWORD
-              value: egs 
-            - name: MARIADB_ROOT_PASSWORD
-              value: root
-          volumeMounts:
-            - name: stock-db-pvc
-              mountPath: /var/lib/static
-      restartPolicy: Always
-      volumes:
-        - name: stock-db-pvc
-          persistentVolumeClaim:
-            claimName: stock-db-pvc
-          
-
-
 #PVC
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: stock-db-pvc
+  name: auth-db-pvc
   namespace: egs6
 spec:
   accessModes:
@@ -53,4 +11,59 @@ spec:
   storageClassName: longhorn
   resources:
     requests:
-      storage: 500Mi
+      storage: 300Mi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-db-deploy
+  namespace: egs6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-db
+  template:
+    metadata:
+      labels:
+        app: auth-db
+    spec:
+      containers:
+        - name: auth-db
+          image: registry.deti:5000/mysteryshirt/auth-db:1010
+          ports:
+            - containerPort: 3306
+          resources: {}
+          env:
+            - name: MARIADB_DATABASE
+              value: auth_db
+            - name: MARIADB_USER
+              value: egs
+            - name: MARIADB_PASSWORD
+              value: egs 
+            - name: MARIADB_ROOT_PASSWORD
+              value: root
+          volumeMounts:
+            - name: auth-db-pvc
+              mountPath: /var/lib/static
+      restartPolicy: Always
+      volumes:
+        - name: auth-db-pvc
+          persistentVolumeClaim:
+            claimName: auth-db-pvc
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-db
+  namespace: egs6
+spec:
+  selector:
+    app: auth-db
+  ports:
+  - port: 3306
+    targetPort: 3306
+
+

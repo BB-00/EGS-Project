@@ -1,51 +1,9 @@
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: db-deploy-stock
-  namespace: egs6
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: stock-db
-  template:
-    metadata:
-      labels:
-        app: stock-db
-    spec:
-      containers:
-        - name: stock-db
-          image: registry.deti:5000/mysteryshirt/stock-db:1012
-          ports:
-            - containerPort: 3306
-          resources: {}
-          env:
-            - name: MARIADB_DATABASE
-              value: stock_db
-            - name: MARIADB_USER
-              value: egs
-            - name: MARIADB_PASSWORD
-              value: egs 
-            - name: MARIADB_ROOT_PASSWORD
-              value: root
-          volumeMounts:
-            - name: stock-db-pvc
-              mountPath: /var/lib/static
-      restartPolicy: Always
-      volumes:
-        - name: stock-db-pvc
-          persistentVolumeClaim:
-            claimName: stock-db-pvc
-          
-
-
 #PVC
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: stock-db-pvc
+  name: payments-db-pvc
   namespace: egs6
 spec:
   accessModes:
@@ -53,4 +11,57 @@ spec:
   storageClassName: longhorn
   resources:
     requests:
-      storage: 500Mi
+      storage: 300Mi
+      
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-db
+  namespace: egs6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments-db
+  template:
+    metadata:
+      labels:
+        app: payments-db
+    spec:
+      containers:
+        - name: payments-db
+          image: registry.deti:5000/mysteryshirt/payments-db:1010
+          ports:
+            - containerPort: 3306
+          resources: {}
+          env:
+            - name: MARIADB_DATABASE
+              value: payments_db
+            - name: MARIADB_USER
+              value: egs
+            - name: MARIADB_PASSWORD
+              value: egs 
+            - name: MARIADB_ROOT_PASSWORD
+              value: root
+          volumeMounts:
+            - name: payments-db-pvc
+              mountPath: /var/lib/static
+      restartPolicy: Always
+      volumes:
+        - name: payments-db-pvc
+          persistentVolumeClaim:
+            claimName: payments-db-pvc
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-db
+  namespace: egs6
+spec:
+  selector:
+    app: payments-db
+  ports:
+  - port: 3306
+    targetPort: 3306
