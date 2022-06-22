@@ -10,7 +10,7 @@ from swagger_server.models.arrayof_material import ArrayofMaterial  # noqa: E501
 from swagger_server import util
 
 config = {
-    'host' : '127.0.0.1',
+    'host' : 'stocks_db',
     'port' : 3306,
     'user' : 'egs',
     'password' : 'egs',
@@ -71,6 +71,7 @@ def materials_post():  # noqa: E501
     #if(cur.execute("select materials_id from materials")== None):
     cur.execute("insert into materials (materials_ID, name) values (?,?)", (materials_ID, name))
     conn.commit()
+
     return
     
     return "materials id already exists"

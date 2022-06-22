@@ -10,13 +10,12 @@ from swagger_server.models.arrayof_category import ArrayofCategory  # noqa: E501
 from swagger_server import util
 
 config = {
-    'host' : '127.0.0.1',
+    'host' : 'stocks_db',
     'port' : 3306,
     'user' : 'egs',
     'password' : 'egs',
     'database' : 'stock_db'
 }
-
 conn = mariadb.connect(**config)
 
 cur = conn.cursor()

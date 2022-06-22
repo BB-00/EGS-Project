@@ -1,3 +1,4 @@
+from operator import truediv
 import re
 import connexion
 import six
@@ -10,7 +11,7 @@ from swagger_server.models.arrayof_articles import ArrayofArticles  # noqa: E501
 from swagger_server.models.arrayof_products import ArrayofProducts  # noqa: E501
 from swagger_server import util
 config = {
-    'host' : '127.0.0.1',
+    'host' : 'stocks_db',
     'port' : 3306,
     'user' : 'egs',
     'password' : 'egs',
@@ -170,15 +171,16 @@ def products_post():  # noqa: E501
         json_data.append(dict(zip(row_headers,result)))
 
 
+    found = True
+
     for x in json_data:
-        found = True
         if(x["product_ID"] == product_ID):
             found = False
             break
         
 
-    if found:
-        cur.execute("insert into products (product_ID, name, size, materials_ID, provider, product_type, reference, quantity, buy_price) values (?,?,?,?,?,?,?,?,?)", (product_ID, name, size, material, provider, product_type, reference, quantity, buy_price))
+    if (found):
+        cur.execute("insert into products (product_ID, name, size, material, provider, product_type, reference, quantity, buy_price) values (?,?,?,?,?,?,?,?,?)", (product_ID, name, size, material, provider, product_type, reference, quantity, buy_price))
         conn.commit()
 
     else:
