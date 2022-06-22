@@ -54,14 +54,14 @@
 			  <div class="col-md-12">
 				 <div class="header-left">
 					 <div class="logo">
-						<a href=""><img src="{{ url_for('static', filename='img/shirt_logo.png') }}" width="50px" alt=""></a>
+						<a href="/"><img src="{{ url_for('static', filename='img/shirt_logo.png') }}" width="50px" alt=""></a>
 					 </div>
 					 <div class="menu">
 						  <a class="toggleMenu" href="#"><img src="{{ url_for('static', filename='img/nav.png') }}" alt="" /></a>
 						    <ul class="nav" id="nav">
 						    	<li><a href="shop">Shop</a></li>
+								<li><a href="orders">Orders</a></li>								
 						    	<li><a href="team">Team</a></li>
-								<li><a href="contact.html">Contact</a></li>								
 								<div class="clear"></div>
 							</ul>
 							<script src="{{ url_for('static', filename='js/fresponsive-nav.js') }}"></script>
@@ -72,8 +72,8 @@
 				    <ul class="icon1 sub-icon1 profile_img">
 					 <li><a href="#"><img src="{{ url_for('static', filename='img/cart.png') }}" alt="" width="50px"/></a>
 						<ul class="sub-icon1 list">
-							<div class="clear"></div>
-							{% if 'cart_item' in session %}
+						   <div class="clear"></div>
+						   {% if 'cart_item' in session %}
 						   {% for item in session['cart_item'] %}
 						   <li class="list_img"><img src="{{ url_for('static', filename=item['prod_img']) }}" width="50px" alt=""/></li>
 						   <li class="list_desc">
@@ -148,7 +148,7 @@
        </div>
        <!--/slider -->
       </div>
-	  <div class="main">
+	  <!-- <div class="main">
 		<div class="content-top">
 			<h2>football kits</h2>
 			<p>hendrerit in vulputate velit esse molestie consequat, vel illum dolore</p>
@@ -190,7 +190,7 @@
 		</script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.flexisel.js') }}"></script>
 		</div>
-	</div>
+	</div> -->
 	
 	<div class="features">
 		<div class="container">

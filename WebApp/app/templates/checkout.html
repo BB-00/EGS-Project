@@ -60,8 +60,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						  <a class="toggleMenu" href="#"><img src="{{ url_for('static', filename='img/nav.png') }}" alt="" /></a>
 						    <ul class="nav" id="nav">
 						    	<li><a href="shop">Shop</a></li>
+								<li><a href="orders">Orders</a></li>								
 						    	<li><a href="team">Team</a></li>
-								<li><a href="contact.html">Contact</a></li>								
 								<div class="clear"></div>
 							</ul>
 							<script src="{{ url_for('static', filename='js/fresponsive-nav.js') }}"></script>
@@ -72,8 +72,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				    <ul class="icon1 sub-icon1 profile_img">
 					 <li><a href="#"><img src="{{ url_for('static', filename='img/cart.png') }}" alt="" width="50px"/></a>
 						<ul class="sub-icon1 list">
-							<div class="clear"></div>
-							{% if 'cart_item' in session %}
+						   <div class="clear"></div>
+						   {% if 'cart_item' in session %}
 						   {% for item in session['cart_item'] %}
 						   <li class="list_img"><img src="{{ url_for('static', filename=item['prod_img']) }}" width="50px" alt=""/></li>
 						   <li class="list_desc">
@@ -124,9 +124,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class=" col-md-3 shop_box">
 							<img src="{{ url_for('static', filename=item['prod_img']) }}" class="img-responsive" alt=""/>
 							<div class="shop_desc">
-								<form>
+								<form action="" method="post" name="rm_cart" id="rm_cart-form">
 									<h3>{{item['prod_name']}}</h3>
 									<span class="actual">${{item['prod_price']}}</span><br>
+									<div class="clear"></div>
+									<input type="submit" name="rm_cart" class="button" value="Remove">
+									<input type="hidden" name="prod_name" value="{{item['prod_name']}}"/>
+									
 								</div>
 							</form>
 						</div>
@@ -134,7 +138,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				</div>
 				<p>YOUR TOTAL IS {{session["checkout_cost"]}}</p>
 				<form action="" method="post" name="checkout" id="checkout-form">
-					<input type="submit" name="Submit" class="button" value="Checkout"><div class="clear"></div>
+					<input type="submit" name="checkout" class="button" value="Checkout"><div class="clear"></div>
 					<input type="hidden" name="token" value="{{session['token']}}"/>
 					<input type="hidden" name="amount" value="{{session['checkout_cost']}}"/>
 					<input type="hidden" name="username" value="{{session['user']}}"/>

@@ -10,13 +10,12 @@ from swagger_server.models.arrayof_category import ArrayofCategory  # noqa: E501
 from swagger_server import util
 
 config = {
-    'host' : '127.0.0.1',
+    'host' : 'stocks_db',
     'port' : 3306,
-    'user' : 'resende',
-    'password' : '',
-    'database' : 'egs'
+    'user' : 'egs',
+    'password' : 'egs',
+    'database' : 'stock_db'
 }
-
 conn = mariadb.connect(**config)
 
 cur = conn.cursor()
@@ -65,14 +64,14 @@ def type_get(offset=None, limit=None, type_id=None, name=None):  # noqa: E501
 
 
 def type_post():  # noqa: E501
-    type_ID = int(request.json["type_id"]) 
+    type_ID = int(request.json["type_ID"]) 
     name = request.json["name"]
 
     if(cur.execute("select materials_id from materials")== None):
         type_ID = type_ID+1
         cur.execute("insert into type (type_ID, name) values (?,?)", (type_ID, name))
         conn.commit()
-        conn.close()
+
         return
     
     return "materials id already exists"

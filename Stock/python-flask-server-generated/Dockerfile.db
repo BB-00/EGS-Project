@@ -1,0 +1,7 @@
+FROM mariadb:latest
+
+COPY init.sql /docker-entrypoint-initdb.d/
+
+# RUN sudo service mariadb start
+
+EXPOSE 3306

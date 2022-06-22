@@ -1,6 +1,6 @@
 import mariadb
 import json
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from pydantic import BaseModel
 from typing import Union
 import sys
