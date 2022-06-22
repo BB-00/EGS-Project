@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: app-shirts
-        image: registry.deti:5000/mysteryshirts/app:1010
+        image: registry.deti:5000/mysteryshirts/app:1011
         ports:
           - containerPort: 9090
 
@@ -29,6 +29,6 @@ metadata:
 spec:
   ports:
   - port: 9090
-    targetPort: 9095
+    targetPort: 9090
   selector:
     app: app-shirts

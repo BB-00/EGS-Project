@@ -41,7 +41,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-app
+  name: nginx-shirts
   namespace: egs6
   annotations:
     kubernetes.io/ingress.class: traefik

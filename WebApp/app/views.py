@@ -57,7 +57,7 @@ def checkout():
 
         try:
 
-            r = requests.get('http://127.0.0.1:9023/MysteryShirt/Stock/1/products')
+            r = requests.get('http://stock-api:8080/MysteryShirt/Stock/1/products')
             r.raise_for_status()
             
             product_count=r.json().count("product_ID")
@@ -81,12 +81,12 @@ def checkout():
                         "size": 0
                     }
 
-            r_p = requests.post('http://127.0.0.1:9023/MysteryShirt/Stock/1/products', json=params)
+            r_p = requests.post('http://stock-api:8080/MysteryShirt/Stock/1/products', json=params)
             r_p.raise_for_status()
 
             session.pop("cart_item", None)
 
-            return redirect('http://127.0.0.1:9021/payments', code=307)
+            return redirect('http://payments-api:9000/payments', code=307)
         except:
             # flash("")
             return redirect(url_for("checkout")) 
@@ -148,7 +148,7 @@ def register_page():
                     }
 
 
-            r = requests.post('http://127.0.0.1:9020/register', json=params)
+            r = requests.post('http://auth-api:9090/register', json=params)
             r.raise_for_status()
 
             session.permanet = True
@@ -158,7 +158,7 @@ def register_page():
             session["cart_item"] = []
             session["checkout_cost"] = 0
 
-            url = 'http://127.0.0.1:9021/wallets/?_username='+session['user']
+            url = 'http://payments-api:9000/wallets/?_username='+session['user']
             print(url)
             r = requests.post(url)
 
@@ -177,7 +177,7 @@ def login_page():
 
         try:
 
-            r = requests.post('http://127.0.0.1:9020/token', request.form)
+            r = requests.post('http://auth-api:9090/token', request.form)
             r.raise_for_status()
             session.permanet = True
             user = request.form["username"]
@@ -212,7 +212,7 @@ def logout():
 @app.route("/orders")
 def orders():
 
-    url = 'http://127.0.0.1:9021/wallets/?_username='+session['user']
+    url = 'http://payments-api:9000/wallets/?_username='+session['user']
 
     return redirect(url)
 
