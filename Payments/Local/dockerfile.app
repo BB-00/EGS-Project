@@ -25,4 +25,3 @@ COPY backend/main.py /backend/
 COPY delay.sh /backend/
 
 CMD ["./delay.sh"]
-#CMD ["uvicorn", "main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "9021"]

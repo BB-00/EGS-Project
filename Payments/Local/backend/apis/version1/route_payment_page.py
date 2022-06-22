@@ -14,18 +14,14 @@ async def payment(request: Request):
 
 	body_list=body.split('&')
 	body_list.pop(0)
-	# print(body)
 
 	token = body_list[0].split('=')[1]
 	amount = body_list[1].split('=')[1]
 	username = body_list[2].split('=')[1]
-	# print(token)
-	# print(amount)
-	# print(username)
 
 	params = {"token":token}
 
-	response = requests.get("http://auth-api:7000/validate", params=params)
+	response = requests.get("http://auth-api:9090/validate", params=params)
 
 	if response.json() != username:
 		raise HTTPException(

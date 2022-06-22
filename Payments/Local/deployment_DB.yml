@@ -30,28 +30,28 @@ spec:
         app: payments-db
     spec:
       containers:
-        - name: payments-db
-          image: registry.deti:5000/mysteryshirt/payments-db:1010
-          ports:
-            - containerPort: 3306
-          resources: {}
-          env:
-            - name: MARIADB_DATABASE
-              value: payments_db
-            - name: MARIADB_USER
-              value: egs
-            - name: MARIADB_PASSWORD
-              value: egs 
-            - name: MARIADB_ROOT_PASSWORD
-              value: root
-          volumeMounts:
-            - name: payments-db-pvc
-              mountPath: /var/lib/static
+      - name: payments-db
+        image: registry.deti:5000/mysteryshirt/payments-db:v1
+        ports:
+        - containerPort: 3306
+        resources: {}
+        env:
+        - name: MARIADB_DATABASE
+          value: payments_db
+        - name: MARIADB_USER
+          value: egs
+        - name: MARIADB_PASSWORD
+          value: egs 
+        - name: MARIADB_ROOT_PASSWORD
+          value: root
+        volumeMounts:
+          - name: payments-db-pvc
+            mountPath: /var/lib/static
       restartPolicy: Always
       volumes:
-        - name: payments-db-pvc
-          persistentVolumeClaim:
-            claimName: payments-db-pvc
+      - name: payments-db-pvc
+        persistentVolumeClaim:
+          claimName: payments-db-pvc
           
 ---
 apiVersion: v1

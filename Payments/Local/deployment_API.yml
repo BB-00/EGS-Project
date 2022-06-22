@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: payments-api
-        image: registry.deti:5000/mysteryshirt/payments-api:1012
+        image: registry.deti:5000/mysteryshirt/payments-api:v2
         ports:
-        - containerPort: 9021
+        - containerPort: 9000
         # env:
           ##### .secret
         resources:
@@ -40,5 +40,5 @@ spec:
   selector:
     app: payments-api
   ports:
-  - port: 9021
+  - port: 9000
     targetPort: 9000
