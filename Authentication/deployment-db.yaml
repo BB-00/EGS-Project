@@ -1,0 +1,69 @@
+#PVC
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: auth-db-pvc
+  namespace: egs6
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 300Mi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-db-deploy
+  namespace: egs6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-db
+  template:
+    metadata:
+      labels:
+        app: auth-db
+    spec:
+      containers:
+        - name: auth-db
+          image: registry.deti:5000/mysteryshirt/auth-db:1010
+          ports:
+            - containerPort: 3306
+          resources: {}
+          env:
+            - name: MARIADB_DATABASE
+              value: auth_db
+            - name: MARIADB_USER
+              value: egs
+            - name: MARIADB_PASSWORD
+              value: egs 
+            - name: MARIADB_ROOT_PASSWORD
+              value: root
+          volumeMounts:
+            - name: auth-db-pvc
+              mountPath: /var/lib/static
+      restartPolicy: Always
+      volumes:
+        - name: auth-db-pvc
+          persistentVolumeClaim:
+            claimName: auth-db-pvc
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-db
+  namespace: egs6
+spec:
+  selector:
+    app: auth-db
+  ports:
+  - port: 3306
+    targetPort: 3306
+
+

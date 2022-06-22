@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-api
+  namespace: egs6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-api
+  template:
+    metadata:
+      labels:
+        app: auth-api
+    spec:
+      containers:
+      - name: auth-api
+        image: registry.deti:5000/mysteryshirt/auth-api:1012
+        ports:
+        - containerPort: 9090
+        # env:
+          ##### .secret
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      restartPolicy: Always
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: egs6
+spec:
+  selector:
+    app: auth-api
+  ports:
+  - port: 9090
+    targetPort: 9090

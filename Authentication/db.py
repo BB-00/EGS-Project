@@ -3,6 +3,7 @@ import json
 from fastapi import HTTPException
 from pydantic import BaseModel
 from typing import Union
+import sys
 
 
 class User(BaseModel):
