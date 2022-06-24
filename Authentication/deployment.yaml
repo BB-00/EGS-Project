@@ -19,8 +19,6 @@ spec:
         image: registry.deti:5000/mysteryshirt/auth-api:1013
         ports:
         - containerPort: 9090
-        # env:
-          ##### .secret
         resources:
           requests:
             memory: "32Mi"
@@ -34,7 +32,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: auth-api
   namespace: egs6
 spec:
   selector:

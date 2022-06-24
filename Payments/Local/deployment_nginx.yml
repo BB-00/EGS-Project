@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-shirts
+  name: nginx-payments
   namespace: egs6
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-shirts
+      app: nginx-payments
   strategy: {}
   template:
     metadata:
       labels:
-        app: nginx-shirts
+        app: nginx-payments
     spec:
       containers:
-        - name: nginx-shirts
-          image: registry.deti:5000/mysteryshirt/nginx-shirts:1015
+        - name: nginx-payments
+          image: registry.deti:5000/mysteryshirt/nginx-payments:1014
           ports:
             - containerPort: 80
           resources: {}
@@ -27,14 +27,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-shirts
+  name: nginx-payments
   namespace: egs6
 spec:
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: nginx-shirts
+    app: nginx-payments
 
 # Configure Traefik
 ---
@@ -50,13 +50,13 @@ metadata:
     traefik.ingress.kubernetes.io/redirect-permanent: "true"
 spec:
   rules:
-  - host: app-shirts.egs
+  - host: payments-api.egs
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: nginx-shirts
+            name: nginx-payments
             port: 
               number: 80
